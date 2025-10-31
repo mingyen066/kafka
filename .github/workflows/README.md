@@ -2,7 +2,7 @@
 
 ## Overview
 
-retrigger-trigger-trigger-trigger-trigger
+retrigger-trigger-trigger-trigger-trigger-trigger
 The entry point for our build is the "CI" workflow which is defined in ci.yml.
 This is used for both PR and trunk builds. The jobs and steps of the workflow
 are defined in build.yml.
