@@ -139,3 +139,4 @@ if __name__ == "__main__":
             append_message_to_pr_body(pr_number, reviewer_message)
         except (EOFError, KeyboardInterrupt):
             exit(0)
+
