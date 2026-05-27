@@ -25,11 +25,14 @@ run-name: Workflow Requested for ${{ github.event.workflow_run.display_title}}
 
 jobs:
   check-pr-labels:
-    # Even though job conditionals are difficult to debug, this will reduce the number of unnecessary runs
-    if: |
-      github.event_name == 'workflow_run' && 
-      (github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'pull_request_review') &&
-      github.event.workflow_run.status == 'completed' && 
+    # Even though job conditionals are difficult to debug, this will reduce the number of unnecessary runs.
+    # Note: `pull_request_review` is intentionally excluded. Those runs are gated but cannot be approved
+    # (their workflow_run head points at the base repo, so the fork-PR approve API returns HTTP 403); the
+    # reviewer trailer for reviews is handled by pr-reviewers-trailer-on-review.yml instead.
+    if:
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.status == 'completed' &&
       github.event.workflow_run.conclusion == 'action_required'
     runs-on: ubuntu-latest
     steps:
